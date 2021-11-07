@@ -33,3 +33,4 @@ public class MatrixIt implements Iterator {
         return data[row][column++];
     }
 }
+
