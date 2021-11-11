@@ -20,7 +20,8 @@ public class MatrixItTest {
     @Test
     public void whenFirstEmptyThenNext() {
         int[][] in = {
-                {}, {1}
+                {},
+                {1}
         };
         MatrixIt it = new MatrixIt(in);
         assertThat(it.next(), is(1));
@@ -29,7 +30,8 @@ public class MatrixItTest {
     @Test
     public void whenFirstEmptyThenHashNext() {
         int[][] in = {
-                {}, {1}
+                {},
+                {1}
         };
         MatrixIt it = new MatrixIt(in);
         assertThat(it.hasNext(), is(true));
@@ -38,7 +40,8 @@ public class MatrixItTest {
     @Test
     public void whenRowHasDiffSize() {
         int[][] in = {
-                {1}, {2, 3}
+                {1},
+                {2, 3}
         };
         MatrixIt it = new MatrixIt(in);
         assertThat(it.next(), is(1));
@@ -49,7 +52,11 @@ public class MatrixItTest {
     @Test
     public void whenFewEmpty() {
         int[][] in = {
-                {1}, {}, {}, {}, {2}
+                {1},
+                {},
+                {},
+                {},
+                {2}
         };
         MatrixIt it = new MatrixIt(in);
         assertThat(it.next(), is(1));
@@ -77,7 +84,8 @@ public class MatrixItTest {
     @Test
     public void whenMultiHashNext() {
         int[][] in = {
-                {}, {1}
+                {},
+                {1}
         };
         MatrixIt it = new MatrixIt(in);
         assertThat(it.hasNext(), is(true));
@@ -86,7 +94,9 @@ public class MatrixItTest {
 
     @Test
     public void whenNoElements() {
-        int[][] in = {{}, {}, {}};
+        int[][] in = {{},
+                {},
+                {}};
         MatrixIt it = new MatrixIt(in);
         assertThat(it.hasNext(), is(false));
     }
