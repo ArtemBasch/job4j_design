@@ -9,64 +9,65 @@ import static org.junit.Assert.assertNull;
 public class RoleStoreTest {
 
     @Test
-    public void whenAddAndFindThenUsernameIsPetr() {
-        UserStore store = new UserStore();
-        store.add(new User("1", "Petr"));
-        User result = store.findById("1");
-        assertThat(result.getUsername(), is("Petr"));
+    public void whenAddAndFindThenRoleNameIsMentor() {
+        RoleStore store = new RoleStore();
+        store.add(new Role("1", "Mentor"));
+        Role result = store.findById("1");
+        assertThat(result.getRoleName(), is("Mentor"));
     }
 
     @Test
-    public void whenAddAndFindThenUserIsNull() {
-        UserStore store = new UserStore();
-        store.add(new User("1", "Petr"));
-        User result = store.findById("10");
+    public void whenAddAndFindThenRoleIsNull() {
+        RoleStore store = new RoleStore();
+        store.add(new Role("1", "Mentor"));
+        Role result = store.findById("10");
         assertNull(result);
     }
 
     @Test
-    public void whenAddDuplicateAndFindUsernameIsPetr() {
-        UserStore store = new UserStore();
-        store.add(new User("1", "Petr"));
-        store.add(new User("1", "Maxim"));
-        User result = store.findById("1");
-        assertThat(result.getUsername(), is("Petr"));
+    public void whenAddDuplicateAndFindRoleNameIsMentor() {
+        RoleStore store = new RoleStore();
+        store.add(new Role("1", "Mentor"));
+        store.add(new Role("1", "Student"));
+        Role result = store.findById("1");
+        assertThat(result.getRoleName(), is("Mentor"));
     }
 
     @Test
-    public void whenReplaceThenUsernameIsMaxim() {
-        UserStore store = new UserStore();
-        store.add(new User("1", "Petr"));
-        store.replace("1", new User("1", "Maxim"));
-        User result = store.findById("1");
-        assertThat(result.getUsername(), is("Maxim"));
+    public void whenReplaceThenRoleNameIsStudent() {
+        RoleStore store = new RoleStore();
+        store.add(new Role("1", "Mentor"));
+        store.replace("1", new Role("1", "Student"));
+        Role result = store.findById("1");
+        assertThat(result.getRoleName(), is("Student"));
     }
 
     @Test
-    public void whenNoReplaceUserThenNoChangeUsername() {
-        UserStore store = new UserStore();
-        store.add(new User("1", "Petr"));
-        store.replace("10", new User("10", "Maxim"));
-        User result = store.findById("1");
-        assertThat(result.getUsername(), is("Petr"));
+    public void whenNoReplaceRoleThenNoChangeRoleName() {
+        RoleStore store = new RoleStore();
+        store.add(new Role("1", "Mentor"));
+        store.replace("10", new Role("10", "Student"));
+        Role result = store.findById("1");
+        assertThat(result.getRoleName(), is("Mentor"));
     }
 
     @Test
-    public void whenDeleteUserThenUserIsNull() {
-        UserStore store = new UserStore();
-        store.add(new User("1", "Petr"));
+    public void whenDeleteRoleThenRoleIsNull() {
+        RoleStore store = new RoleStore();
+        store.add(new Role("1", "Mentor"));
         store.delete("1");
-        User result = store.findById("1");
+        Role result = store.findById("1");
         assertNull(result);
     }
 
     @Test
-    public void whenNoDeleteUserThenUsernameIsPetr() {
-        UserStore store = new UserStore();
-        store.add(new User("1", "Petr"));
+    public void whenNoDeleteRoleThenRoleNameIsMentor() {
+        RoleStore store = new RoleStore();
+        store.add(new Role("1", "Mentor"));
         store.delete("10");
-        User result = store.findById("1");
-        assertThat(result.getUsername(), is("Petr"));
+        Role result = store.findById("1");
+        assertThat(result.getRoleName(), is("Mentor"));
     }
 
 }
+
