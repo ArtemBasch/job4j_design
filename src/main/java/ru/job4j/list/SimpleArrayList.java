@@ -11,7 +11,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     private int modCount;
 
-    private int pointer;
+    final private int DEFAULT_LENGTH = 10;
 
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
@@ -19,17 +19,19 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public void add(T value) {
-        if (pointer >= container.length) {
-            container = Arrays.copyOf(container, container.length * 2);
-        }
-        container[pointer++] = value;
         modCount++;
+        if (size == container.length) {
+            container = grow();
+        }
+            container[size] = value;
+        size++;
 
     }
 
     @Override
     public T set(int index, T newValue) {
-        T oldValue = container[Objects.checkIndex(index, container.length)];
+        Objects.checkIndex(index, container.length);
+        T oldValue = container[index];
         container[index] = newValue;
         return oldValue;
     }
@@ -47,6 +49,15 @@ public class SimpleArrayList<T> implements List<T> {
         return oldValue;
     }
 
+    public T[] grow() {
+        if (container.length > 0) {
+            container = Arrays.copyOf(container, container.length * 2);
+        } else {
+            container = Arrays.copyOf(container, DEFAULT_LENGTH);
+        }
+        return container;
+    }
+
     @Override
     public T get(int index) {
         Objects.checkIndex(index, container.length);
@@ -55,24 +66,25 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public int size() {
-        size = container.length;
-        return size;
+        return this.size;
     }
 
     @Override
     public Iterator<T> iterator() {
+
         int expectedModCount = modCount;
         return new Iterator<T>() {
+            int pointer = 0;
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return pointer < container.length;
+                return pointer < size;
             }
             @Override
             public T next() {
-                if (!hasNext()) {
+                if (!hasNext() || container[pointer] == null) {
                     throw new NoSuchElementException();
                 }
                 return container[pointer++];
