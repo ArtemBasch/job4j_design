@@ -11,7 +11,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     private int modCount;
 
-    final private int DEFAULT_LENGTH = 10;
+    private int defaultLength = 10;
 
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
@@ -53,7 +53,7 @@ public class SimpleArrayList<T> implements List<T> {
         if (container.length > 0) {
             container = Arrays.copyOf(container, container.length * 2);
         } else {
-            container = Arrays.copyOf(container, DEFAULT_LENGTH);
+            container = Arrays.copyOf(container, defaultLength);
         }
         return container;
     }
