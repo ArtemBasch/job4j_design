@@ -19,27 +19,25 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public void add(T value) {
-        modCount++;
         if (size == container.length) {
             container = grow();
         }
-            container[size] = value;
+        container[size] = value;
+        modCount++;
         size++;
 
     }
 
     @Override
     public T set(int index, T newValue) {
-        Objects.checkIndex(index, container.length);
-        T oldValue = container[index];
+        T oldValue = get(index);
         container[index] = newValue;
         return oldValue;
     }
 
     @Override
     public T remove(int index) {
-        Objects.checkIndex(index, size());
-        T oldValue = container[index];
+        T oldValue = get(index);
         int elemToMove = size - index - 1;
         if (elemToMove > 0) {
             System.arraycopy(container, index + 1, container, index, elemToMove);
@@ -60,7 +58,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        Objects.checkIndex(index, container.length);
+        Objects.checkIndex(index, size);
         return container[index];
     }
 
@@ -84,7 +82,7 @@ public class SimpleArrayList<T> implements List<T> {
             }
             @Override
             public T next() {
-                if (!hasNext() || container[pointer] == null) {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 return container[pointer++];
