@@ -1,4 +1,4 @@
-package ru.job4j.list.SimpleLinkedList;
+package ru.job4j.list.simplelinkedlist;
 
 import java.util.*;
 
