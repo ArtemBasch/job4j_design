@@ -11,32 +11,6 @@ public class SimpleLinkedList<E> implements List<E> {
 
     @Override
     public void add(E value) {
-        linkLast(value);
-    }
-
-    @Override
-    public E get(int index) {
-        Objects.checkIndex(index, size);
-        return index < (size / 2) ? getFromStart(index) : getFromEnd(index);
-    }
-
-    public E getFromStart(int index) {
-        Node<E> x = first;
-        for (int i = 0; i < index; i++) {
-            x = x.next;
-        }
-        return x.item;
-    }
-
-    public E getFromEnd(int index) {
-        Node<E> x = last;
-        for (int i = size - 1; i > index; i--) {
-            x = x.prev;
-        }
-        return x.item;
-    }
-
-    public void linkLast(E value) {
         final Node<E> l = last;
         final Node<E> newNode = new Node<>(l, value, null);
         last = newNode;
@@ -47,6 +21,26 @@ public class SimpleLinkedList<E> implements List<E> {
         }
         size++;
         modCount++;
+    }
+
+    @Override
+    public E get(int index) {
+        Objects.checkIndex(index, size);
+        E result = null;
+        if (index < (size / 2)) {
+            Node<E> x = first;
+            for (int i = 0; i < index; i++) {
+                x = x.next;
+            }
+            result = x.item;
+        } else {
+            Node<E> x = last;
+            for (int i = size - 1; i > index; i--) {
+                x = x.prev;
+            }
+            result = x.item;
+        }
+        return result;
     }
 
     @Override
