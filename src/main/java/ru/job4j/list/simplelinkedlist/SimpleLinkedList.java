@@ -17,23 +17,26 @@ public class SimpleLinkedList<E> implements List<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        if (index < (size / 2)) {
-            Node<E> x = first;
-            for (int i = 0; i < index; i++) {
-                x = x.next;
-            }
-            return x.item;
-        } else {
-            Node<E> x = last;
-            for (int i = size - 1; i > index; i--) {
-                x = x.prev;
-                }
-            return x.item;
+        return index < (size / 2) ? getFromStart(index) : getFromEnd(index);
+    }
+
+    public E getFromStart(int index) {
+        Node<E> x = first;
+        for (int i = 0; i < index; i++) {
+            x = x.next;
         }
+        return x.item;
+    }
+
+    public E getFromEnd(int index) {
+        Node<E> x = last;
+        for (int i = size - 1; i > index; i--) {
+            x = x.prev;
+        }
+        return x.item;
     }
 
     public void linkLast(E value) {
-
         final Node<E> l = last;
         final Node<E> newNode = new Node<>(l, value, null);
         last = newNode;
@@ -44,35 +47,27 @@ public class SimpleLinkedList<E> implements List<E> {
         }
         size++;
         modCount++;
-
     }
 
     @Override
     public Iterator<E> iterator() {
         int expectedModCount = modCount;
-
         return new Iterator<E>() {
             Node<E> current = first;
-
-            int pointer = 0;
-
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return pointer < size;
+                return current != null;
             }
-
             public E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 Node<E> saveCurrent = current;
                 current = current.next;
-                pointer++;
                 return saveCurrent.item;
             }
-
         };
     }
 
@@ -80,12 +75,10 @@ public class SimpleLinkedList<E> implements List<E> {
         E item;
         Node<E> next;
         Node<E> prev;
-
         Node(Node<E> prev, E element, Node<E> next) {
             this.item = element;
             this.next = next;
             this.prev = prev;
         }
     }
-
 }
