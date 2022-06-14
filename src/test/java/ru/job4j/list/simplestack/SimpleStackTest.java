@@ -1,4 +1,4 @@
-/**
+
 package ru.job4j.list.simplestack;
 
 import static org.junit.Assert.assertThat;
@@ -33,4 +33,3 @@ public class SimpleStackTest {
         assertThat(stack.pop(), is(1));
     }
 }
-*/

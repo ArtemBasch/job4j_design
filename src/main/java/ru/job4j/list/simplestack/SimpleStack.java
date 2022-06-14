@@ -1,4 +1,4 @@
-/**
+
 package ru.job4j.list.simplestack;
 
 import ru.job4j.list.forwardlikned.ForwardLinked;
@@ -15,4 +15,3 @@ public class SimpleStack<T> {
         linked.addFirst(value);
     }
 }
-*/
