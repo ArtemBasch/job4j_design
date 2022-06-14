@@ -25,6 +25,7 @@ public class ForwardLinkedTest {
         linked.deleteFirst();
     }
 
+
     @Test
     public void whenMultiDelete() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
