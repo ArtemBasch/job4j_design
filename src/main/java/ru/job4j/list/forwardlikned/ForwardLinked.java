@@ -1,11 +1,11 @@
 package ru.job4j.list.forwardlikned;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class ForwardLinked<T> implements Iterable<T> {
     private Node<T> head;
+    private int size = 0;
 
     public void add(T value) {
         Node<T> node = new Node<T>(value, null);
@@ -22,6 +22,7 @@ public class ForwardLinked<T> implements Iterable<T> {
 
     public void addFirst(T value) {
         head = new Node<>(value, head);
+        size++;
     }
 
     public T deleteFirst() {
@@ -33,6 +34,7 @@ public class ForwardLinked<T> implements Iterable<T> {
             head = head.next;
             temp.value = null;
             temp.next = null;
+            size--;
             return element;
         }
     }
@@ -57,6 +59,10 @@ public class ForwardLinked<T> implements Iterable<T> {
                 return value;
             }
         };
+    }
+
+    public int getSize() {
+        return size;
     }
 
     private static class Node<T> {
