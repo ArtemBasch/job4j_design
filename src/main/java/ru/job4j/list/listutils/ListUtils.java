@@ -42,8 +42,9 @@ public class ListUtils {
         while (iterator.hasNext()) {
             T elem = iterator.next();
             for (int i = 0; i < elements.size(); i++) {
-                if (elem.equals(elements.get(i)))
+                if (elem.equals(elements.get(i))) {
                     iterator.remove();
+                }
             }
         }
     }
