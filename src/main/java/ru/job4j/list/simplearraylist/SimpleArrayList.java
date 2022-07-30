@@ -72,7 +72,7 @@ public class SimpleArrayList<T> implements List<T> {
 
         int expectedModCount = modCount;
         return new Iterator<T>() {
-            int pointer = 0;
+            int pointer;
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
