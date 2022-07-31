@@ -34,8 +34,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int hash(K hashCode) {
-        int h = hashCode.hashCode();
-        return (hashCode == null) ? 0 : h ^ (h >>> 16);
+        int h;
+        return (hashCode == null) ? 0 : (h = hashCode.hashCode()) ^ (h >>> 16);
     }
 
     private int indexFor(int hash, int length) {
@@ -70,13 +70,11 @@ public class SimpleMap<K, V> implements Map<K, V> {
         int i = indexFor(hash(key), table.length);
         MapEntry<K, V> node = table[i];
         if (node != null) {
-            if (key == null) {
-                if (key == node.key) {
+            if (key == null && key == node.key) {
                     table[i] = null;
                     modCount++;
                     count--;
                     result = true;
-                }
             } else if (hash(key) == hash(node.key) && key.equals(node.key)) {
                 table[i] = null;
                 modCount++;
