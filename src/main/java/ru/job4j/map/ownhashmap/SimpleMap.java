@@ -34,8 +34,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int hash(K hashCode) {
-        int h;
-        return (hashCode == null) ? 0 : (h = hashCode.hashCode()) ^ (h >>> 16);
+
+        return (hashCode == null) ? 0 : hashCode.hashCode() ^ (hashCode.hashCode() >>> 16);
     }
 
     private int indexFor(int hash, int length) {
