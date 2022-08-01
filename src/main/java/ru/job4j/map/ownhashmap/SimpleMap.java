@@ -43,13 +43,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
-        int newSize = table.length << 1;
-        capacity = newSize;
-        MapEntry<K, V>[] newTable = new MapEntry[newSize];
+        capacity = capacity << 1;
+        MapEntry<K, V>[] newTable = new MapEntry[capacity];
         if (table != null) {
             for (MapEntry<K, V> nodes : table) {
                 if (nodes != null) {
-                    int i = indexFor(hash(nodes.key), newSize);
+                    int i = indexFor(hash(nodes.key), capacity);
                     newTable[i] = nodes;
                 }
             }
@@ -59,7 +58,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(K key) {
-        int i = indexFor(hash(key), table.length);
+        int i = indexFor(hash(key), capacity);
         MapEntry<K, V> node = table[i];
         return node != null && hash(key) == hash(node.key) && Objects.equals(key, node.key) ? node.value : null;
     }
@@ -69,19 +68,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
         boolean result = false;
         int i = indexFor(hash(key), table.length);
         MapEntry<K, V> node = table[i];
-        if (node != null) {
-            if (key == null && key == node.key) {
+            if (node != null  && hash(key) == hash(node.key) && key == node.key) {
                     table[i] = null;
                     modCount++;
                     count--;
                     result = true;
-            } else if (hash(key) == hash(node.key) && key.equals(node.key)) {
-                table[i] = null;
-                modCount++;
-                count--;
-                result = true;
             }
-        }
         return result;
     }
 
