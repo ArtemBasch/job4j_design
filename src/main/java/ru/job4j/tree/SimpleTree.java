@@ -8,7 +8,13 @@ public class SimpleTree<E> implements Tree<E> {
     public SimpleTree(final E root) {
         this.root = new Node<>(root);
     }
+/*
+метод add проверяет существует ли родительский узел.
+Если есть родитьель и ребенок - rsl оставляем false.
+Если у существующего родителя нет ребенка - добавляем ребенка в
+ArrayList прикрепленный к родительской ноде. о_О
 
+ */
     @Override
     public boolean add(E parent, E child) {
         boolean rsl = false;
