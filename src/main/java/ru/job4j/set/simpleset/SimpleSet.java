@@ -21,10 +21,7 @@ public class SimpleSet<T> implements Set<T> {
         }
         return result;
     }
-    /*
-    first netbeans commit
-    */
-
+ 
     @Override
     public boolean contains(T value) {
         Iterator<T> iter = set.iterator();
