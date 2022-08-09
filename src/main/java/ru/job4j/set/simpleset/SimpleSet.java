@@ -21,6 +21,9 @@ public class SimpleSet<T> implements Set<T> {
         }
         return result;
     }
+    /*
+    test2
+    */
  
     @Override
     public boolean contains(T value) {
