@@ -1,6 +1,7 @@
 package ru.job4j.tree;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class SimpleTree<E> implements Tree<E> {
     private final Node<E> root;
@@ -29,20 +30,40 @@ ArrayList прикрепленный к родительской ноде. о_О
         }
         return rsl;
     }
-
-    @Override
-    public Optional<Node<E>> findBy(E value) {
-        Optional<Node<E>> rsl = Optional.empty();
+/*
+находит нужный узел по переданому условию.
+ */
+    public Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
+        Optional<Node<E>> res = Optional.empty();
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
         while (!data.isEmpty()) {
-            Node<E> el = data.poll();
-            if (el.value.equals(value)) {
-                rsl = Optional.of(el);
-                break;
-            }
-            data.addAll(el.children);
+            Node<E> element =  data.poll();
+             if (condition.test(element)) {
+                 res = Optional.of(element);
+                 break;
+             }
+             for (Node<E> child : element.children) {
+                 data.offer(child);
+             }
         }
-        return rsl;
+        return res;
+    }
+
+    /*
+        возвращает узел по значению
+     */
+    @Override
+    public Optional<Node<E>> findBy(E value) {
+        Predicate<Node<E>> predicate = e -> e.value.equals(value);
+
+        return findByPredicate(predicate);
+    }
+    /*
+    проверяет является ли дерево бинарным.
+     */
+    public boolean isBinary() {
+        Predicate<Node<E>> predicate = e -> e.children.size() > 2;
+        return !findByPredicate(predicate).isPresent();
     }
 }
