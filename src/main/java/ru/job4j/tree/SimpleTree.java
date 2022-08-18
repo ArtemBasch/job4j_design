@@ -64,6 +64,6 @@ ArrayList прикрепленный к родительской ноде. о_О
      */
     public boolean isBinary() {
         Predicate<Node<E>> predicate = e -> e.children.size() > 2;
-        return !findByPredicate(predicate).isPresent();
+        return findByPredicate(predicate).isEmpty();
     }
 }
