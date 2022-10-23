@@ -16,8 +16,8 @@ public class Analyze {
             actual.put(user.getId(), user.getName());
         }
 
-        for (User user : previous){
-            if (!actual.containsKey(user.getId())){
+        for (User user : previous) {
+            if (!actual.containsKey(user.getId())) {
                 deleted++;
             } else if (actual.containsKey(user.getId()) && !actual.containsValue(user.getName())) {
                 changed++;
