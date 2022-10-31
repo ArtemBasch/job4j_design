@@ -7,21 +7,15 @@ import java.util.List;
 
 public class LogFilter {
     public List<String> filter(String file) {
-        ArrayList<String> temporary = new ArrayList<>();
         ArrayList<String> res = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader("log.txt"))) {
             String text;
-            while ((text = in.readLine()) != null) {
-                temporary.add(text);
-            }
-           for (String str : temporary) {
-               String[] temp = str.split(" ");
-               for (String words : temp) {
-                   if (words.equals("404")) {
-                       res.add(str);
-                   }
-               }
-           }
+          while ((text = in.readLine()) != null) {
+              String[] str = text.split(" ");
+              if (str[str.length - 2].equals("404")) {
+                  res.add(text);
+              }
+          }
         } catch (Exception e) {
             e.printStackTrace();
         }
