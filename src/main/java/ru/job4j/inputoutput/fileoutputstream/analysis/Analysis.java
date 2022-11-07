@@ -1,12 +1,10 @@
 package ru.job4j.inputoutput.fileoutputstream.analysis;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class Analysis {
     public void unavailable(String source, String target) {
         boolean isOn = true;
-
         try (BufferedReader in = new BufferedReader(new FileReader(source)); PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
             String line;
             while ((line = in.readLine()) != null) {
@@ -14,8 +12,9 @@ public class Analysis {
               if ((lines[0].equals("400") || lines[0].equals("500")) && isOn) {
                   out.write(lines[1] + ";");
                   isOn = false;
-              } else if (!isOn && (lines[0].equals("200") || lines[0].equals("300"))) {
+              } else if ((lines[0].equals("200") || lines[0].equals("300")) && !isOn) {
                   out.write(lines[1] + ";" + System.lineSeparator());
+                  isOn = true;
               }
           }
         } catch (IOException e) {
