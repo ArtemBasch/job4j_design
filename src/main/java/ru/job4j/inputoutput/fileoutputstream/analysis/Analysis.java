@@ -14,7 +14,7 @@ public class Analysis {
                   isOn = false;
               } else if ((lines[0].equals("200") || lines[0].equals("300")) && !isOn) {
                   out.write(lines[1] + ";" + System.lineSeparator());
-                  isOn = true;
+                  isOn = true;//
               }
           }
         } catch (IOException e) {
