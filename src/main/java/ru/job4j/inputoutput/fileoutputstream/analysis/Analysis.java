@@ -7,8 +7,7 @@ public class Analysis {
     public void unavailable(String source, String target) {
         boolean isOn = true;
 
-        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
-            PrintWriter out = new PrintWriter(new FileOutputStream(target));
+        try (BufferedReader in = new BufferedReader(new FileReader(source)); PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
             String line;
             while ((line = in.readLine()) != null) {
               String[] lines = line.split(" ");
@@ -19,8 +18,7 @@ public class Analysis {
                   out.write(lines[1] + ";" + System.lineSeparator());
               }
           }
-            out.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
