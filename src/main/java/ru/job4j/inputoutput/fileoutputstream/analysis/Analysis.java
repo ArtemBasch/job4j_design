@@ -14,14 +14,13 @@ public class Analysis {
                   isOn = false;
               } else if ((lines[0].equals("200") || lines[0].equals("300")) && !isOn) {
                   out.write(lines[1] + ";" + System.lineSeparator());
-                  isOn = true;//
+                  isOn = true;
               }
           }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
     public static void main(String[] args) {
         Analysis anal = new Analysis();
        anal.unavailable("./data/analysis/server.log", "./data/analysis/target.csv");
