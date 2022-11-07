@@ -26,16 +26,17 @@ class ConfigTest {
       public void whenIncompletePairs() {
         String path = "./data/pair_with_one_member.properties";
         Config config = new Config(path);
-        config.load();
-        assertThat(config.value("name")).isEqualTo(null);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Не соответвтсует шаблону 'ключ=значение'");
     }
 
     @Test
     void whenWithoutDelimiter() {
         String path = "./data/pair_without_delimiter.properties";
         Config config = new Config(path);
-        config.load();
-        assertThatIllegalArgumentException();
-
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Не соответвтсует шаблону 'ключ=значение'");
     }
 }

@@ -19,15 +19,19 @@ public class Config {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
           while (in.ready()) {
               String text = in.readLine();
-              if ((text != null && !text.startsWith("#") && text.length() > 0)) {
-                  String[] str = text.split("=", 2);
-                  if (str[0].isEmpty() || str[1].isEmpty() || !text.contains("=")) {
-                      throw new IllegalArgumentException();
+              if (!text.isBlank() && !text.startsWith("#")) {
+                  if (text.contains("=")) {
+                      String[] str = text.split("=", 2);
+                      if (str[0].isEmpty() || str[1].isEmpty()) {
+                          throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
+                      }
+                      values.put(str[0], str[1]);
+                  } else {
+                      throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
                   }
-                  values.put(str[0], str[1]);
               }
           }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
           }
