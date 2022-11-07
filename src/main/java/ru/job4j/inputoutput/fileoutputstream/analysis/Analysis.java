@@ -9,10 +9,10 @@ public class Analysis {
             String line;
             while ((line = in.readLine()) != null) {
               String[] lines = line.split(" ");
-              if ((lines[0].equals("400") || lines[0].equals("500")) && isOn) {
+              if (("400".equals(lines[0]) || "500".equals(lines[0])) && isOn) {
                   out.write(lines[1] + ";");
                   isOn = false;
-              } else if ((lines[0].equals("200") || lines[0].equals("300")) && !isOn) {
+              } else if (("200".equals(lines[0]) || "300".equals(lines[0])) && !isOn) {
                   out.write(lines[1] + ";" + System.lineSeparator());
                   isOn = true;
               }
