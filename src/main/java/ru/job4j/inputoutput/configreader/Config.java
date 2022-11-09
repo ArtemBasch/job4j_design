@@ -15,31 +15,39 @@ public class Config {
         this.path = path;
     }
 
-    public void load() throws IllegalArgumentException {
-        try (BufferedReader in = new BufferedReader(new FileReader(path))) {
-          while (in.ready()) {
-              String text = in.readLine();
-              if (!text.isBlank() && !text.startsWith("#")) {
-                  if (text.contains("=")) {
-                      String[] str = text.split("=", 2);
-                      if (str[0].isEmpty() || str[1].isEmpty()) {
-                          throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
-                      }
-                      values.put(str[0], str[1]);
-                  } else {
-                      throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
-                  }
-              }
-          }
-        } catch (IOException e) {
-            e.printStackTrace();
+    public String checkLine(String str) {
+        while (!str.isBlank() && !str.startsWith("#")) {
+            return str;
         }
-          }
+        return null;
+    }
+
+    public void load() {
+        try (BufferedReader in = new BufferedReader(new FileReader(path))) {
+            String[] words = new String[2];
+            String text;
+            while (in.ready()) {
+                text = in.readLine();
+              if (!text.isBlank() && !text.contains("#") && !text.contains("=")) {
+                  throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
+              }
+              if (text.contains("=")) {
+                  words = text.split("=", 2);
+              }
+              if ("".equals(words[0]) || "".equals(words[1])) {
+                  throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
+              }
+              values.put(words[0], words[1]);
+            }
+    } catch (
+    IOException e) {
+        e.printStackTrace();
+    }
+}
 
     public String value(String key) {
         return values.get(key);
     }
-
     @Override
     public String toString() {
         StringJoiner out = new StringJoiner(System.lineSeparator());
