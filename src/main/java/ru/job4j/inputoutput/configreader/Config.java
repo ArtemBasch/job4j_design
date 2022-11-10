@@ -28,11 +28,11 @@ public class Config {
             String text;
             while (in.ready()) {
                 text = in.readLine();
-              if (!text.isBlank() && !text.contains("#") && !text.contains("=")) {
-                  throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
-              }
-              if (text.contains("=")) {
+              if (!text.startsWith("#") && !text.isBlank() && text.contains("=")) {
                   words = text.split("=", 2);
+              }
+              if (!text.contains("=") && !text.isBlank() && !text.startsWith("#")) {
+                  throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
               }
               if ("".equals(words[0]) || "".equals(words[1])) {
                   throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
