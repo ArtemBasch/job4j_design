@@ -15,25 +15,27 @@ public class Config {
         this.path = path;
     }
 
-    public String checkLine(String str) {
-        while (!str.isBlank() && !str.startsWith("#")) {
-            return str;
-        }
-        return null;
-    }
-
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
-            String[] words = new String[2];
+            String[] words;
             String text;
             while (in.ready()) {
                 text = in.readLine();
-              if (!text.startsWith("#") && !text.isBlank() && text.contains("=")) {
-                  words = text.split("=", 2);
-              }
-              if (!text.contains("=") && !text.isBlank() && !text.startsWith("#")) {
-                  throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
-              }
+
+                while (text.isBlank() || text.startsWith("#")) {
+                    text = in.readLine();
+                }
+                if (!text.contains("=")) {
+                    throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
+                }
+                if (text.startsWith("=")) {
+                    throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
+                }
+                if (text.charAt(0) == (text.charAt(text.length() - 1)) && text.length() == 1) {
+                    throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
+                }
+
+            words = text.split("=", 2);
               if ("".equals(words[0]) || "".equals(words[1])) {
                   throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
               }
@@ -48,6 +50,7 @@ public class Config {
     public String value(String key) {
         return values.get(key);
     }
+
     @Override
     public String toString() {
         StringJoiner out = new StringJoiner(System.lineSeparator());
@@ -60,6 +63,12 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Config("app.properties"));
+        Config config = new Config("app.properties");
+        config.load();
+        for (String str : config.values.keySet()) {
+            String key = str;
+            String val = config.value(key);
+            System.out.println("Key " + key + " Value " + val);
+        }
     }
 }

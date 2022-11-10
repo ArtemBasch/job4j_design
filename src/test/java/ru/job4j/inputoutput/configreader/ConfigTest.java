@@ -2,7 +2,6 @@ package ru.job4j.inputoutput.configreader;
 
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ConfigTest {
 
@@ -15,7 +14,7 @@ class ConfigTest {
     }
 
     @Test
-    void whenPartWithCommentAndEmptyStrings() {
+    void pairWithCommentAndEmptyStrings() {
         String path = "./data/pair_with_comment.properties";
         Config config = new Config(path);
         config.load();
@@ -38,5 +37,15 @@ class ConfigTest {
         assertThatThrownBy(config::load)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Не соответвтсует шаблону 'ключ=значение'");
+    }
+
+    @Test
+    void whenStartsWithDel() {
+        String path = "./data/pair_with_last_member.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Не соответвтсует шаблону 'ключ=значение'");
+
     }
 }
