@@ -21,9 +21,8 @@ public class Config {
             String text;
             while (in.ready()) {
                 text = in.readLine();
-
-                while (text.isBlank() || text.startsWith("#")) {
-                    text = in.readLine();
+                if (text.isBlank() || text.startsWith("#")) {
+                    continue;
                 }
                 if (!text.contains("=")) {
                     throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
@@ -31,12 +30,12 @@ public class Config {
                 if (text.startsWith("=")) {
                     throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
                 }
-                if (text.charAt(0) == (text.charAt(text.length() - 1)) && text.length() == 1) {
+                if (text.indexOf("=") == text.length() - 1) {
                     throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
                 }
 
             words = text.split("=", 2);
-              if ("".equals(words[0]) || "".equals(words[1])) {
+              if (words[0].isEmpty() || words[1].isEmpty()) {
                   throw new IllegalArgumentException("Не соответвтсует шаблону 'ключ=значение'");
               }
               values.put(words[0], words[1]);
