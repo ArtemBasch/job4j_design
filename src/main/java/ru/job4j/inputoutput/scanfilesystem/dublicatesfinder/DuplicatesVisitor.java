@@ -13,10 +13,8 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty fProp = new FileProperty(file.toFile().length(), file.toFile().getName());
-        if (!files.containsKey(fProp)) {
-            files.put(fProp, new ArrayList<>());
-            files.get(fProp).add(file.toAbsolutePath());
-        } else {
+        files.putIfAbsent(fProp, new ArrayList<>(Collections.singleton(file.toAbsolutePath())));
+        if (files.containsKey(fProp) && !files.get(fProp).contains(file.toAbsolutePath())) {
             files.get(fProp).add(file.toAbsolutePath());
         }
         return super.visitFile(file, attrs);
