@@ -23,13 +23,14 @@ public class Search {
     }
 
     private void validate(String[] args) {
+        File file = new File(args[0]);
         if (args.length == 0) {
             throw new IllegalArgumentException("Root folder is null. Usage  ROOT_FOLDER.");
         }
-        if (!new File(args[0]).exists()) {
+        if (!file.exists()) {
             throw new IllegalArgumentException(String.format("Not exist %s", args[0]));
         }
-        if (!new File(args[0]).isDirectory()) {
+        if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", args[0]));
         }
         if (!args[1].startsWith(".")) {
