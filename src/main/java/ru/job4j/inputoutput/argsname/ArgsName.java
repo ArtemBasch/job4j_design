@@ -39,7 +39,7 @@ public class ArgsName {
             throw new IllegalArgumentException("Ключ отсутствует");
         }
         if (!str.startsWith("-")) {
-           throw new IllegalArgumentException("Строка не начинается с '-'");
+           throw new IllegalArgumentException("Нет знака '-'");
         }
     }
 

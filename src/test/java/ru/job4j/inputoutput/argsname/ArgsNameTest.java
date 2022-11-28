@@ -47,14 +47,14 @@ class ArgsNameTest {
     }
 
     @Test
-    void noEqualsSymbol() {
-        assertThatThrownBy(() -> ArgsName.of(new String[] {"-?msg:Exit"}))
+    void noDashSymbol() {
+        assertThatThrownBy(() -> ArgsName.of(new String[] {"request=?msg=Exit="}))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void noDashSymbol() {
-        assertThatThrownBy(() -> ArgsName.of(new String[] {"request=?msg=Exit="}))
+    void noEqualsSymbol() {
+        assertThatThrownBy(() -> ArgsName.of(new String[] {"-?msg:Exit"}))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
