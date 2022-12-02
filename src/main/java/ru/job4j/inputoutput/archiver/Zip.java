@@ -25,6 +25,22 @@ public class Zip {
         }
     }
 
+    private void validate(ArgsName argsName) {
+        File file = new File(argsName.get("d"));
+        if (argsName.get("d").equals(null)) {
+            throw new IllegalArgumentException("Root folder is null.");
+        }
+        if (!file.exists()) {
+            throw new IllegalArgumentException(String.format("Not exist %s", file));
+        }
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException(String.format("Not directory %s", file));
+        }
+        if (!argsName.get("e").startsWith(".")) {
+            throw new IllegalArgumentException(String.format("Not an extension %s", argsName.get("e")));
+        }
+    }
+
     public void packSingleFile(File source, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             zip.putNextEntry(new ZipEntry(source.getPath()));
@@ -43,6 +59,7 @@ public class Zip {
         }
         Zip zip = new Zip();
         ArgsName argsName = ArgsName.of(args);
+        zip.validate(argsName);
         Path source = Paths.get(argsName.get("d"));
         File target = new File(argsName.get("o"));
         zip.packFiles(Search.search(source, pred -> !pred.toFile().getName().endsWith(argsName.get("e"))), target);
