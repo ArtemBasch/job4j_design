@@ -17,7 +17,9 @@ public class ConsoleChat {
     private final String botAnswers;
     private boolean botOnLine = true;
     private boolean running = true;
+    private boolean answerReady = false;
     private final List<String> log = new ArrayList<>();
+    private List<String> botPhrases = new ArrayList<>();
     String human = " Вы: ";
     String bot = " Бот Ваня: ";
 
@@ -32,10 +34,10 @@ public class ConsoleChat {
         String tempLine;
             while (running) {
                 line = scanner.nextLine();
-                if (line.equals(CONTINUE) && !botOnLine) {
+                if (CONTINUE.equals(line) && !botOnLine) {
                     botOnLine = true;
                 }
-                if (line.equals(STOP)) {
+                if (STOP.equals(line)) {
                     botOnLine = false;
                 }
                 logger(human, line);
@@ -44,7 +46,7 @@ public class ConsoleChat {
                     System.out.println(bot + tempLine);
                     logger(bot, tempLine);
                 }
-                if (line.equals(OUT)) {
+                if (OUT.equals(line)) {
                     saveLog(log);
                     running = false;
                 }
@@ -61,9 +63,12 @@ public class ConsoleChat {
     }
 
     private String getRandomPhrase() {
-        List<String> tempList = readPhrases();
-        int randIndex = (int) (Math.random() * tempList.size());
-        String answer = tempList.get(randIndex);
+        if (!answerReady) {
+            botPhrases = readPhrases();
+            answerReady = true;
+        }
+        int randIndex = (int) (Math.random() * botPhrases.size());
+        String answer = botPhrases.get(randIndex);
         return  answer;
     }
 
