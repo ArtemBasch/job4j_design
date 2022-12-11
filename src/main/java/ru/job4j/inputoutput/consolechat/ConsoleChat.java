@@ -20,8 +20,8 @@ public class ConsoleChat {
     private boolean answerReady = false;
     private final List<String> log = new ArrayList<>();
     private List<String> botPhrases = new ArrayList<>();
-    String human = " Вы: ";
-    String bot = " Бот Ваня: ";
+    private String human = " Вы: ";
+    private String bot = " Бот Ваня: ";
 
     public ConsoleChat(String path, String botAnswers) {
         this.path = path;
@@ -73,7 +73,6 @@ public class ConsoleChat {
     }
 
     private List<String> readPhrases() {
-        List<String> botPhrases = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(botAnswers), Charset.forName("UTF-8")))) {
             br.lines().forEach(botPhrases::add);
         } catch (IOException e) {
