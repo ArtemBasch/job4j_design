@@ -12,7 +12,7 @@ public class CSVReader {
     public static void handle(ArgsName argsName) throws Exception {
         CSVReader reader = new CSVReader();
         List<String> lines = new ArrayList<>();
-        try(var scanner = new Scanner(new FileInputStream(argsName.get("path"))).useDelimiter("\r\n")) {
+        try (var scanner = new Scanner(new FileInputStream(argsName.get("path"))).useDelimiter("\r\n")) {
             while (scanner.hasNext()) {
                 lines.add(scanner.nextLine());
             }
@@ -36,7 +36,7 @@ public class CSVReader {
         ArrayList<Integer> result = new ArrayList<>();
         String[] firstLine = headLine.split(delimiter);
         String[] filterKeys = filter.split(",");
-        for (int i = 0; i < filterKeys.length; i++ ) {
+        for (int i = 0; i < filterKeys.length; i++) {
             for (int j = 0; j < firstLine.length; j++) {
                 if (firstLine[j].equals(filterKeys[i])) {
                     result.add(j);
