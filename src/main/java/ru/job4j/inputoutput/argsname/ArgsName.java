@@ -6,12 +6,19 @@ import java.util.Map;
 public class ArgsName {
     private final Map<String, String> values = new HashMap<>();
 
+    /*
+    возвращает значение из карты values по ключу
+     */
     public String get(String key) {
         if (values.get(key) == null) {
             throw new IllegalArgumentException("Нет значения");
         }
         return values.get(key);
     }
+
+    /*
+    помещает пары в карту values для дальнейшего использования.
+     */
 
     private void parse(String[] args) {
         String[] pairs;
@@ -24,6 +31,10 @@ public class ArgsName {
                 values.put(pairs[0], pairs[1]);
             }
         }
+
+        /*
+        проверяет аргументы на соответствие шаблону "-ключ=значение"
+         */
 
     private void checkFormat(String str) {
         if (str.isBlank()) {
@@ -42,7 +53,9 @@ public class ArgsName {
            throw new IllegalArgumentException("Нет знака '-'");
         }
     }
-
+        /*
+        передает аругменты в виде массива на преобразование в пары.
+         */
     public static ArgsName of(String[] args) {
         ArgsName names = new ArgsName();
         names.parse(args);

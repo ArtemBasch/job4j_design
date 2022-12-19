@@ -9,6 +9,11 @@ import java.util.Scanner;
 import java.util.StringJoiner;
 
 public class CSVReader {
+
+    /*
+    добавляет содержимое исходного файла в коллекцию lines
+    проходит по ней циклом for и вносит запрошенные (по соответствующим ключам, переданным в строке filter) данные в новый файл
+     */
     public static void handle(ArgsName argsName) throws Exception {
         CSVReader reader = new CSVReader();
         List<String> lines = new ArrayList<>();
@@ -31,7 +36,9 @@ public class CSVReader {
             e.printStackTrace();
         }
     }
-
+        /*
+        возвращает коллекцию индексов соответствующих фильтрам.
+         */
     private ArrayList<Integer> getPointers(String headLine, String delimiter, String filter) {
         ArrayList<Integer> result = new ArrayList<>();
         String[] firstLine = headLine.split(delimiter);
@@ -44,5 +51,10 @@ public class CSVReader {
             }
         }
         return result;
+    }
+
+    public static void main(String[] args) throws Exception {
+        ArgsName argsName = ArgsName.of(args);
+        handle(argsName);
     }
 }
