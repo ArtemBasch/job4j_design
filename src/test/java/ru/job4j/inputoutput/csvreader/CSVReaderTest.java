@@ -4,8 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import ru.job4j.inputoutput.argsname.ArgsName;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import java.io.File;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Files;
 
@@ -62,5 +63,24 @@ class CSVReaderTest {
         ).concat(System.lineSeparator());
         CSVReader.handle(argsName);
         assertThat(Files.readString(target.toPath())).isEqualTo(expected);
+    }
+    @Test
+    void whenStdOutThenNoFile(@TempDir Path folder) throws Exception {
+        String data = String.join(
+                System.lineSeparator(),
+                "name;age;last_name;education",
+                "Tom;20;Smith;Bachelor",
+                "Jack;25;Johnson;Undergraduate",
+                "William;30;Brown;Secondary special"
+        );
+        File file = folder.resolve("source.csv").toFile();
+        File target = folder.resolve("target.csv").toFile();
+        ArgsName argsName = ArgsName.of(new String[]{
+                "-path=" + file.getAbsolutePath(), "-delimiter=;",
+                "-out=" + "stdout", "-filter=education,age,last_name"
+        });
+        Files.writeString(file.toPath(), data);
+        CSVReader.handle(argsName);
+        assertThat(!target.exists());
     }
 }
