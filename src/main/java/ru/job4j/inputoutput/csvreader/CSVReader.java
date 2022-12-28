@@ -44,7 +44,7 @@ public class CSVReader {
         }
     }
         /*
-        возвращает коллекцию индексов соответствующих фильтрам.
+        возвращает коллекцию индексов соответствующих расположению фильтров.
          */
     private static ArrayList<Integer> getPointers(String headLine, String delimiter, String filter) {
         ArrayList<Integer> result = new ArrayList<>();
