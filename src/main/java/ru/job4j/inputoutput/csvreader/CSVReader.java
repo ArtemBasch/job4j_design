@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CSVReader {
-
+    private static final String DELIMITER = ";";
+    private static final String CONSOLE_OUT = "stdout";
     /*
     Добавляет содержимое исходного файла в коллекцию lines,
     проходит по ней циклом for и вносит запрошенные (по соответствующим ключам, переданным в строке filter) данные в новый файл.
@@ -21,6 +22,8 @@ public class CSVReader {
             while (scanner.hasNext()) {
                 lines.add(scanner.nextLine());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         ArrayList<Integer> pointer = reader.getPointers(lines.get(0), argsName.get("delimiter"), argsName.get("filter"));
         StringBuffer sb = new StringBuffer();
@@ -30,10 +33,10 @@ public class CSVReader {
                     sb.append(splitLine[pointer.get(k)]).append((k == pointer.size() - 1) ? System.lineSeparator() : ";");
                 }
             }
-        if (argsName.get("out").equals("stdout")) {
+        if (CONSOLE_OUT.equals(argsName.get("out"))) {
             System.out.println(sb);
         } else {
-            try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(argsName.get("out"))))) {
+            try (PrintWriter out = new PrintWriter(new FileOutputStream(argsName.get("out")))) {
                 out.write(sb.toString());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -43,7 +46,7 @@ public class CSVReader {
         /*
         возвращает коллекцию индексов соответствующих фильтрам.
          */
-    private ArrayList<Integer> getPointers(String headLine, String delimiter, String filter) {
+    private static ArrayList<Integer> getPointers(String headLine, String delimiter, String filter) {
         ArrayList<Integer> result = new ArrayList<>();
         String[] firstLine = headLine.split(delimiter);
         String[] filterKeys = filter.split(",");
@@ -60,31 +63,25 @@ public class CSVReader {
         метод проверяет аргументы:
         количество не меньше 4, расширение файла 'csv', разделитель всегда ';',
          */
-    private void checkArgs(String[] args, ArgsName argsName) {
+    private static void checkArgs(ArgsName argsName) {
         File file = new File(argsName.get("path"));
-        if (args.length < 4) {
-            throw new IllegalArgumentException("Wrong number of arguments");
-        }
         if (!file.exists()) {
-            throw new IllegalArgumentException("Is not a file");
+            throw new IllegalArgumentException("File does not exist!");
         }
         if (!argsName.get("path").endsWith(".csv")) {
             throw new IllegalArgumentException("The file is not a 'csv'");
         }
-        if (!argsName.get("delimiter").equals(";")) {
+        if (!DELIMITER.equals(argsName.get("delimiter"))) {
             throw new IllegalArgumentException("Wrong delimiter");
         }
     }
 
     public static void main(String[] args) throws Exception {
-        CSVReader cr = new CSVReader();
-        File file = new File(args[0]);
-        File target = new File(args[1]);
-        String[] arguments = new String[]{
-                "-path=" + file.getAbsolutePath(), "-delimiter=;",
-                "-out=" + target.getAbsolutePath(), "-filter=name,position,phone"};
-        ArgsName argsName = ArgsName.of(arguments);
-        cr.checkArgs(arguments, argsName);
+        if (args.length < 4) {
+            throw new IllegalArgumentException("Wrong number of arguments");
+        }
+        ArgsName argsName = ArgsName.of(args);
+        checkArgs(argsName);
         handle(argsName);
     }
 }
