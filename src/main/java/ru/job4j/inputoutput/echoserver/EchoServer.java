@@ -6,8 +6,8 @@ import java.net.Socket;
 
 public class EchoServer {
     /**
-    *curl -i http://localhost:9000/?msg=Hello
-    *Параметр -i указывает curl вывести всю информацию принятую от сервера.
+     * curl -i http://localhost:9000/?msg=Hello
+     * Параметр -i указывает curl вывести всю информацию принятую от сервера.
      * создаем сервер
      * ServerSocket server = new ServerSocket(9000)
      *сервер ожидает обращения клиента
