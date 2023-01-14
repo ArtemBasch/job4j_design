@@ -33,8 +33,7 @@ public class EchoServer {
                         System.out.println(str);
                         if (str.contains("?msg=Bye") || str.contains("?msg=Exit")) {
                             server.close();
-                        }
-                        else if (str.contains("?msg=Hello")) {
+                        } else if (str.contains("?msg=Hello")) {
                             out.write("Hello, dear friend.".getBytes());
                         } else {
                             out.write("What".getBytes());
