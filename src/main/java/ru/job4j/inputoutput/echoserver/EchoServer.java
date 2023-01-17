@@ -25,7 +25,7 @@ public class EchoServer {
      * окончательно отправляем ответ после чтения
      * out.flush();
      */
-    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
