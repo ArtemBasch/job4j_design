@@ -24,12 +24,12 @@ public class Contact implements Serializable {
     @Override
     public String toString() {
         return "Contact{"
-                +"zipCode="
+                + "zipCode="
                 + zipCode
-                +", phone='"
+                + ", phone='"
                 + phone
                 + '\''
-                +'}';
+                + '}';
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
