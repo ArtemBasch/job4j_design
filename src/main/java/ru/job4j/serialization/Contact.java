@@ -24,9 +24,9 @@ public class Contact implements Serializable {
     @Override
     public String toString() {
         return "Contact{"
-                + "zipCode="
+                + "zipCodee="
                 + zipCode
-                + ", phone='"
+                + ", phonee='"
                 + phone
                 + '\''
                 + '}';
