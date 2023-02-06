@@ -11,7 +11,6 @@ public class Main {
         /* Преобразуем объект person в json-строку. */
         final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         System.out.println(gson.toJson(person));
-        System.out.println("__________________");
 
         /* Модифицируем json-строку */
         final String personJson =
@@ -26,9 +25,6 @@ public class Main {
                         + "[\"Student\",\"Free\"]"
                         + "}";
         final Person personMod = gson.fromJson(personJson, Person.class);
-
         System.out.println(personMod);
-        System.out.println("_____");
-        System.out.println(gson);
     }
 }
