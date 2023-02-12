@@ -1,0 +1,16 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<device type="Graphic card" model="MSI AMD Radeon RX 6700 XT GAMING X">
+    <parameters>
+        <graphicProcessor>Radeon RX 6700 XT</graphicProcessor>
+        <microarchitecture>AMD RDNA 2</microarchitecture>
+        <technical process="7nm"/>
+    </parameters>
+    <mining suitability="false"/>
+    <dimensions>
+        <low profile="false"/>
+        <length>279</length>
+        <width>131</width>
+        <thikness>58</thikness>
+        <weight>1179</weight>
+    </dimensions>
+</device>
