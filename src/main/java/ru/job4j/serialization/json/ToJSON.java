@@ -6,7 +6,7 @@ import ru.job4j.serialization.Person;
 
 public class ToJSON {
     public static void main(String[] args) {
-        Contact contact = new Contact(111111,"11-111");
+        Contact contact = new Contact(111111, "11-111");
         String[] status = new String[] {"Worker", "Married"};
         final Person person = new Person(false, 30, contact, status);
         JSONObject jsonObject = new JSONObject();
