@@ -12,8 +12,7 @@ public class ToJSON {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sex", person.isSex());
         jsonObject.put("age", person.getAge());
-        jsonObject.put("zipCode", contact.getZipCode());
-        jsonObject.put("phone", contact.getPhone());
+        jsonObject.put("contact", contact);
         jsonObject.put("status", status);
 
         System.out.println(jsonObject);
